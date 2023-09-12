@@ -2,6 +2,7 @@ global using BlazorECommerceDemo.Shared;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 global using BlazorECommerceDemo.Server.Data;
+global using BlazorECommerceDemo.Server.Services.ProductService;
 using BlazorECommerceDemo.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
 
@@ -15,6 +16,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 
