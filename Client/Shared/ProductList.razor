@@ -1,4 +1,5 @@
 ﻿@inject IProductService ProductService
+@implements IDisposable
 
 @if (ProductService.Products == null || ProductService.Products.Count == 0)
 {
@@ -27,6 +28,11 @@ else
             </li>
         }
     </ul>
+    for(int i = 1; i <= ProductService.PageCount; i++)
+    {
+        <a class="btn @(i == ProductService.CurrentPage ? "btn-info" : "btn-outline-info") page-selection"
+        href="/search/@ProductService.LastSearchText/@i">@i</a>
+    }
 }
 
 @code {
