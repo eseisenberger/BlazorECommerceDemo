@@ -1,4 +1,5 @@
-﻿using static System.Net.WebRequestMethods;
+﻿using Microsoft.AspNetCore.Authorization;
+using static System.Net.WebRequestMethods;
 
 namespace BlazorECommerceDemo.Server.Controllers
 {
@@ -52,6 +53,31 @@ namespace BlazorECommerceDemo.Server.Controllers
         public async Task<ActionResult<ServiceResponse<List<Product>>>> GetFeaturedProducts()
         {
             var result = await _productService.GetFeaturedProductsAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("admin"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetAdminProducts()
+        {
+            var result = await _productService.GetAdminProductsAsync();
+            return Ok(result);
+        }
+        [HttpPost("admin"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> CreateProduct(Product product)
+        {
+            var result = await _productService.CreateProductAsync(product);
+            return Ok(result);
+        }
+        [HttpPut("admin"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> UpdateProduct(Product product)
+        {
+            var result = await _productService.UpdateProductAsync(product);
+            return Ok(result);
+        }
+        [HttpDelete("admin/{id}"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ServiceResponse<bool>>> DeleteProduct(int id)
+        {
+            var result = await _productService.DeleteProductAsync(id);
             return Ok(result);
         }
     }
